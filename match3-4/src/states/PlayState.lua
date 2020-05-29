@@ -205,17 +205,17 @@ function PlayState:calculateMatches()
         for k, match in pairs(matches) do
             for i, tile in pairs(match) do
                 if tile.variety==1 then
-                    self.score = self.score + 100
+                    self.score = self.score + 50
                 elseif tile.variety==2 then
-                    self.score = self.score + 200                
+                    self.score = self.score + 100                
                 elseif tile.variety==3 then
-                    self.score = self.score + 300  
+                    self.score = self.score + 150  
                 elseif tile.variety==4 then
-                    self.score = self.score + 400
+                    self.score = self.score + 200
                 elseif tile.variety==5 then
-                    self.score = self.score + 500 
+                    self.score = self.score + 250 
                 else
-                    self.score = self.score + 600                   
+                    self.score = self.score + 300                   
                 end
             end
             --JCV - increase the time by 1 second for each matching tile
