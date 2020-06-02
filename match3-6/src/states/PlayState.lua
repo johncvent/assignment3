@@ -179,23 +179,23 @@ function PlayState:update(dt)
                     end)
                 else                   
                     
-                    -- revert grid positions of tiles
+                    --JCV - revert grid positions of tiles
                     tempX = self.highlightedTile.gridX
                     tempY = self.highlightedTile.gridY
 
                     self.highlightedTile.gridX = newTile.gridX
                     self.highlightedTile.gridY = newTile.gridY
-                    
+
                     newTile.gridX = tempX
                     newTile.gridY = tempY
 
-                    -- revert tiles in the tiles table
+                    --JCV - revert tiles in the tiles table
                     self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
                         self.highlightedTile
 
                     self.board.tiles[newTile.gridY][newTile.gridX] = newTile  
 
-                    -- play error sound and unhighlight the tile                    
+                    --JCV - play error sound and unhighlight the tile                    
                     gSounds['error']:play()
                     self.highlightedTile = nil                 
                 end
