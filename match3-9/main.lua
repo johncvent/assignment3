@@ -49,6 +49,9 @@ function love.load()
     clickedX = 0
     clickedY = 0
 
+    tempX = 0
+    tempY = 0
+
     -- window bar title
     love.window.setTitle('Match 3')
 
@@ -106,12 +109,28 @@ end
 
 function love.mousepressed(x, y, button)
     if button == 1 then -- Versions prior to 0.10.0 use the MouseConstant 'l'
-        clickedX, clickedY = push:toGame(x, y)
+        tempX, tempY = push:toGame(x, y)
+        if tempX == nil then
+        else 
+        	clickedX = tempX
+        end
+        if tempY == nil then 
+        else
+        	clickedY = tempY
+        end        
     end
+
+    table.insert(love.mouse.buttonsPressed, {button = button, x = clickedX, y = clickedY})
 end
 
 function love.mouse.wasPressed(button)
-
+    
+    for i=1, #love.mouse.buttonsPressed do
+    	if love.mouse.buttonsPressed[i].button == button then 
+    		return true
+    	end
+    end
+    return false
 end
 
 function love.update(dt)
@@ -127,7 +146,7 @@ function love.update(dt)
     gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
-    --love.mouse.buttonsPressed = {}
+    love.mouse.buttonsPressed = {}
 
     --JCV - This gets the x and y coordinates of the mouse and assigns those to these respectively.
    --mouse.x, mouse.y = push:toGame(love.mouse.getPosition())  
@@ -151,8 +170,15 @@ function love.draw()
         --end
     --end  
 
-    love.graphics.print("Text", clickedX, clickedY)
-
     gStateMachine:render()
+
+    love.graphics.setColor(255, 255, 255) 
+    love.graphics.setFont(love.graphics.newFont(12))
+    y=0
+    for i=1, #love.mouse.buttonsPressed do
+    	love.graphics.print("Click at : " .. love.mouse.buttonsPressed[i].x .. "," .. love.mouse.buttonsPressed[i].y,0,y)
+    	y = y + 10
+    end
+
     push:finish()
 end

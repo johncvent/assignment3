@@ -102,6 +102,40 @@ function StartState:update(dt)
             -- turn off input during transition
             self.pauseInput = true
         end
+
+        if love.mouse.wasPressed(1) then
+            for i=1, #love.mouse.buttonsPressed do
+                if love.mouse.buttonsPressed[i].x > 234.6 and
+                love.mouse.buttonsPressed[i].x < 277.8 and
+                love.mouse.buttonsPressed[i].y > 167.6 and
+                love.mouse.buttonsPressed[i].y < 177.1 then
+                    -- tween, using Timer, the transition rect's alpha to 255, then
+                    -- transition to the BeginGame state after the animation is over
+                    Timer.tween(1, {
+                        [self] = {transitionAlpha = 255}
+                    }):finish(function()
+                        gStateMachine:change('begin-game', {
+                            level = 1
+                        })
+
+                        -- remove color timer from Timer
+                        self.colorTimer:remove()
+                    end)
+                end                            
+            end
+            -- turn off input during transition
+            self.pauseInput = true
+        end
+        if love.mouse.wasPressed(1) then
+            for i=1, #love.mouse.buttonsPressed do
+                if love.mouse.buttonsPressed[i].x > 216.9 and
+                love.mouse.buttonsPressed[i].x < 296.3 and
+                love.mouse.buttonsPressed[i].y > 191.8 and
+                love.mouse.buttonsPressed[i].y < 203.8 then
+                    love.event.quit()
+                end                            
+            end
+        end
     end
 
     -- update our Timer, which will be used for our fade transitions
@@ -136,6 +170,7 @@ function StartState:render()
     -- draw our transition rect; is normally fully transparent, unless we're moving to a new state
     love.graphics.setColor(255, 255, 255, self.transitionAlpha)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+
 end
 
 --[[
@@ -192,6 +227,7 @@ function StartState:drawOptions(y)
     end
     
     love.graphics.printf('Quit Game', 0, VIRTUAL_HEIGHT / 2 + y + 33, VIRTUAL_WIDTH, 'center')
+
 end
 
 --[[
